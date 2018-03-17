@@ -14,7 +14,7 @@
     <body>
         <h1>Booking table</h1>
         <br/>
-        <form action="" method="post">
+        <form action="BookingServlet" method="post">
             
             Table Number:
             <input type="text" placeholder="E.g 1 ~ 10">
