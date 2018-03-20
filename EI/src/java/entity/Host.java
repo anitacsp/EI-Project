@@ -11,10 +11,12 @@ package entity;
  */
 public class Host extends People{
     private boolean avaliablity;
+    private double cost;
 
-    public Host(boolean avaliablity, String name, char gender, String phone) {
+    public Host(boolean avaliablity, String name, char gender, String phone, double cost) {
         super(name, gender, phone);
         this.avaliablity = avaliablity;
+        this.cost = cost;
     }
 
     public boolean isAvaliable() {
@@ -24,7 +26,16 @@ public class Host extends People{
     public void setAvaliablity(boolean avaliablity) {
         this.avaliablity = avaliablity;
     }
+    
+    public double getCost() {
+        return cost;
+    }
 
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    
     @Override
     public String toString() {
         return "Host{" + super.toString() + "avaliablity=" + avaliablity + '}';
