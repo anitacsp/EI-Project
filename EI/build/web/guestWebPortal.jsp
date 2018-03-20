@@ -9,6 +9,43 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">
+            function hide() {
+                document.getElementById('hostInfo').style.display = 'none';
+                
+            };
+            function show() {
+                document.getElementById('hostInfo').style.display = 'block';
+            };
+            function checkHostDetail() {
+                var name = document.getElementById('name');
+                var age = document.getElementById('age');
+                var gender = document.getElementById('gender');
+                var race = document.getElementById('race');
+                var cost = document.getElementById('cost');
+                
+                if(name.value == ""){
+                    document.getElementById('name').value = "*";
+                }
+                
+                if(age.value == ""){
+                    document.getElementById('age').value = "*";
+                }
+                
+                if(gender.value == ""){
+                    document.getElementById('gender').value = "*";
+                }
+                
+                if(race.value == ""){
+                    document.getElementById('race').value = "*";
+                }
+                
+                if(cost.value == ""){
+                    document.getElementById('cost').value = "*";
+                }
+            };
+        </script>
+
         <title>Guest Web Portal</title>
     </head>
     <body>
@@ -29,41 +66,94 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
             </select>
-            
-            <br/>
-            Liquor:
-            <input type="text" name="liquor" placeholder="E.g Volka" required>
-            <br/>
 
+            <br/>
+            <br/>
+            Premium Beer ($8):
+            <select name="beer" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            
+            Premium Volka ($20):
+            <select name="volka" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            
+            Premium Wine ($50):
+            <select name="wine" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <br/>
+            <br/>
+            
             Start Date time:
             <input type="datetime-local" name="startDatetime" required>
 
             End Date time:
-            <input type="datetime-local" name="startDatetime" required>
+            <input type="datetime-local" name="endDatetime" required>
             <br/>
-
-            Host Preference:
             <br/>
+            
+            Do you want to book a host?
+            <input type="radio" name="option" value="no" onclick="hide()" checked> no
+            <input type="radio" name="option" value="yes" onclick="show()" > yes
+            <br>
+            <br>
+            
+            <div id="hostInfo" style="display: none;">
+                Host Preference:
+                <br/>
+                <br/>
+                Name:
+                <input type="text" name="hostName" id="name" value="">
 
-            Name:
-            <input type="text" name="hostName" required>
+                Age:
+                <input type="text" name="hostAge" id="age" value="">
+                <br/>
 
-            Age:
-            <input type="text" name="hostAge" required>
-            <br/>
+                Gender:
+                <input type="text" name="hostGender" id="gender" value="">
 
-            Gender:
-            <input type="text" name="hostGender" required>
+                Race:
+                <input type="text" name="hostRace" placeholder="E.g Chinese, Malay, Indian...etc" id="race" value="">
 
-            Race:
-            <input type="text" name="hostRace" placeholder="E.g Chinese, Malay, Indian...etc" required>
+                Cost:
+                <input type="text" name="hostCost" id="cost" value="">
+                <br/>
+                <br/>
+            </div>
 
-            Cost:
-            <input type="text" name="hostCost" required>
-            <br/>
-
-
-            <button type="submit">Submit</button>
+            <button type="submit" onclick="checkHostDetail()">Submit</button>
 
 
         </form>

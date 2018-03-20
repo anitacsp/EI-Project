@@ -5,7 +5,10 @@
  */
 package Servlet;
 
+import DAO.HostDAO;
+import DAO.ScheduleDAO;
 import DAO.TableDAO;
+import entity.Host;
 import entity.Schedule;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,7 +42,9 @@ public class BookingServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String tableNum = request.getParameter("tableNum");
-            String liquor = request.getParameter("liquor");
+            String beer = request.getParameter("beer");
+            String volka = request.getParameter("volka");
+            String wine = request.getParameter("wine");
             String startDatetime = request.getParameter("startDatetime");
             String endDatetime = request.getParameter("endDatetime");
             String hostName = request.getParameter("hostName");
@@ -49,22 +54,34 @@ public class BookingServlet extends HttpServlet {
             String hostCost = request.getParameter("hostCost");
             HttpSession session = request.getSession();
             
+            System.out.println("hostname= "+hostName);
+            
             TableDAO tableDAO = new TableDAO();
+            ScheduleDAO scheduleDAO = new ScheduleDAO();
+            HostDAO hostDAO = new HostDAO();
             int tableNo = Integer.parseInt(tableNum);
             
             if(tableDAO.isTableBooked(tableNo, startDatetime, endDatetime)){
-                request.setAttribute("message", "The table is booked, please select another timing/table!");
+                request.setAttribute("message", "The table is booked, please book another timing/table!");
             } else {
                 String guestName = (String) session.getAttribute("user");
                 
                 Schedule schedule = new Schedule(guestName, startDatetime, endDatetime, tableNo);
+
+                Host host = hostDAO.searchHost();
+                
+                int success = scheduleDAO.addSchedule(schedule, host);
+                
+                if(success != 0 && host != null){
+                    request.setAttribute("message", "The booking is made successfully!");
+                }
                 
                 
                 
-                request.setAttribute("message", "The booking is made successfully!");
+                
             }
             
-            RequestDispatcher view = request.getRequestDispatcher("customerManagement.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("guestWebPortal.jsp");
             view.forward(request, response);
             
         }

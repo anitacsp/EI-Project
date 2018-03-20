@@ -30,10 +30,10 @@ public class DatabaseConnection {
             String osName = System.getProperty("os.name");
             if (osName.equals("Linux")) {
                 // in production environment, use aws.db.password
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/EI?rewriteBatchedStatements=true", "root", "");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/is301?rewriteBatchedStatements=true", "root", "");
             } else {
                 // in local environment, use db.password
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/EI?rewriteBatchedStatements=true", "root", "");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/is301?rewriteBatchedStatements=true", "root", "");
             }
             
         } catch (Exception e) {
