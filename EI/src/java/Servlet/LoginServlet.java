@@ -38,7 +38,10 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");          
             
+            HttpSession session = request.getSession();
+            
         if (username.equals("penguin") && password.equals("penguin")) {
+            session.setAttribute("user", username);
             response.sendRedirect("guestWebPortal.jsp");
         } else {
                 request.setAttribute("error", "Invalid username/password");

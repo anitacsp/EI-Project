@@ -15,26 +15,57 @@
         <h1>Booking table</h1>
         <br/>
         <form action="BookingServlet" method="post">
-            
+
             Table Number:
-            <input type="text" placeholder="E.g 1 ~ 10">
-            <br/>
+            <select name="tableNum">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
             
+            <br/>
             Liquor:
-            <input type="text" placeholder="E.g Volka">
+            <input type="text" name="liquor" placeholder="E.g Volka" required>
             <br/>
-            
-            Date and Time:
-            <input type="datetime-local">
+
+            Start Date time:
+            <input type="datetime-local" name="startDatetime" required>
+
+            End Date time:
+            <input type="datetime-local" name="startDatetime" required>
             <br/>
-            
+
             Host Preference:
-            <input type="text" placeholder="E.g Gender, Age... etc">
             <br/>
-            
+
+            Name:
+            <input type="text" name="hostName" required>
+
+            Age:
+            <input type="text" name="hostAge" required>
+            <br/>
+
+            Gender:
+            <input type="text" name="hostGender" required>
+
+            Race:
+            <input type="text" name="hostRace" placeholder="E.g Chinese, Malay, Indian...etc" required>
+
+            Cost:
+            <input type="text" name="hostCost" required>
+            <br/>
+
+
             <button type="submit">Submit</button>
-            
-            
+
+
         </form>
     </body>
 </html>
