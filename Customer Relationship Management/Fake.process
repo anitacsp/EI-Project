@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://schemas.tibco.com/bw/plugins/xml/5.0/RESTJSONExceptions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:ns4="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/ns/no_namespace_schema_location/BookingResults.xsd" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/HostSchedule.xsd" xmlns:pfx2="http://www.tibco.com/ns/no_namespace_schema_location/TableSchedule.xsd" xmlns:pfx="http://www.tibco.com/ns/no_namespace_schema_location/Try.xsd">
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/TableSchedule.xsd" schemaLocation="/TableSchedule.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/HostSchedule.xsd" schemaLocation="/HostSchedule.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/BookingResults.xsd" schemaLocation="/BookingResults.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/Try.xsd" schemaLocation="/Try.xsd"/>
+    <pd:name>Fake.process</pd:name>
+    <pd:startName>HTTP Receiver</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="HTTP Receiver">
+        <pd:type>com.tibco.plugin.http.HTTPEventSource</pd:type>
+        <pd:resourceType>httppalette.httpEventSource</pd:resourceType>
+        <pd:x>47</pd:x>
+        <pd:y>135</pd:y>
+        <config>
+            <outputMode>String</outputMode>
+            <defaultEncoding>ISO8859_1</defaultEncoding>
+            <inputOutputVersion>5.3.0</inputOutputVersion>
+            <newMimeSupport>true</newMimeSupport>
+            <sharedChannel>/Guest Portal Connection.sharedhttp</sharedChannel>
+            <customField>
+                <row>
+                    <attribute>Guest</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>required</attributeCard>
+                </row>
+                <row>
+                    <attribute>Date</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>required</attributeCard>
+                </row>
+                <row>
+                    <attribute>WantHost</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>required</attributeCard>
+                </row>
+                <row>
+                    <attribute>Beer</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>Wine</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>Vodka</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>HostName</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>Race</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>Gender</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>Budget</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+            </customField>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Accept" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Accept-Charset" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Accept-Encoding" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Length" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Connection" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1303</pd:endX>
+    <pd:endY>151</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1522130511936</pd:targetNamespace>
+    <pd:activity name="Render-XML-Booking">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>395</pd:x>
+        <pd:y>87</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>true</validateInput>
+            <textEncoding>UTF-8</textEncoding>
+            <term ref="pfx2:TableSchedule"/>
+        </config>
+        <pd:inputBindings>
+            <TableSchedule>
+                <Table>
+                    <Guest>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Guest"/>
+                    </Guest>
+                    <Date>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Date"/>
+                    </Date>
+                </Table>
+            </TableSchedule>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JMS Table Schedule Queue Requestor">
+        <pd:type>com.tibco.plugin.jms.JMSQueueRequestReplyActivity</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueRequestReplyActivity</pd:resourceType>
+        <pd:x>607</pd:x>
+        <pd:y>85</pd:y>
+        <config>
+            <PermittedMessageType>Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>q.TableSchedule</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/JMS Connection.sharedjmscon</ConnectionReference>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <Body>
+                    <xsl:value-of select="$Render-XML-Booking/xmlString"/>
+                </Body>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render XML">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>426</pd:x>
+        <pd:y>312</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>true</validateInput>
+            <textEncoding>UTF-8</textEncoding>
+            <term ref="pfx3:HostSchedule"/>
+        </config>
+        <pd:inputBindings>
+            <HostSchedule>
+                <Host>
+                    <Guest>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Guest"/>
+                    </Guest>
+                    <Date>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Date"/>
+                    </Date>
+                    <HostName>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/HostName"/>
+                    </HostName>
+                    <Gender>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Gender"/>
+                    </Gender>
+                    <Race>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Race"/>
+                    </Race>
+                    <Budget>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Budget"/>
+                    </Budget>
+                </Host>
+            </HostSchedule>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JMS Host Schedule Queue Requestor">
+        <pd:type>com.tibco.plugin.jms.JMSQueueRequestReplyActivity</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueRequestReplyActivity</pd:resourceType>
+        <pd:x>596</pd:x>
+        <pd:y>313</pd:y>
+        <config>
+            <PermittedMessageType>Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>q.HostCheck</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/JMS Connection.sharedjmscon</ConnectionReference>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <Body>
+                    <xsl:value-of select="$Render-XML/xmlString"/>
+                </Body>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Java Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>753</pd:x>
+        <pd:y>356</pd:y>
+        <config>
+            <fullsource>package Fake;
+import java.util.*;
+import java.io.*;
+public class FakeJavaCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected int beer = 0;
+	protected int vodka = 0;
+	protected int wine = 0;
+	protected double cost = 0.0d;
+	protected double totalCost = 0.0d;
+	public int getbeer() {
+		return beer;
+	}
+	public void setbeer(int val) {
+		beer = val;
+	}
+	public int getvodka() {
+		return vodka;
+	}
+	public void setvodka(int val) {
+		vodka = val;
+	}
+	public int getwine() {
+		return wine;
+	}
+	public void setwine(int val) {
+		wine = val;
+	}
+	public double getcost() {
+		return cost;
+	}
+	public void setcost(double val) {
+		cost = val;
+	}
+	public double gettotalCost() {
+		return totalCost;
+	}
+	public void settotalCost(double val) {
+		totalCost = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public FakeJavaCode() {
+	}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	In  : int beer
+	In  : int vodka
+	In  : int wine
+	In  : double cost
+	Out : double totalCost
+* Available Variables: DO NOT MODIFY *****/
+
+totalCost = 100.0;
+
+totalCost += beer * 10.90 + vodka * 99.90 + wine * 50.0 + cost; 
+
+
+}
+}
+</fullsource>
+            <fileName>FakeJavaCode</fileName>
+            <packageName>Fake</packageName>
+            <inputData>
+                <row>
+                    <fieldName>beer</fieldName>
+                    <fieldType>int</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>vodka</fieldName>
+                    <fieldType>int</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>wine</fieldName>
+                    <fieldType>int</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>cost</fieldName>
+                    <fieldType>double</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </inputData>
+            <outputData>
+                <row>
+                    <fieldName>totalCost</fieldName>
+                    <fieldType>double</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </outputData>
+            <byteCode>
+                <class>
+                    <name>FakeJavaCode</name>
+                    <byteCode>yv66vgAAADMAOAkADwAvCQAPADAJAA8AMQkADwAyCQAPADMKABAANAZAWQAAAAAAAAZAJczMzMzMzQZAWPmZmZmZmgZASQAAAAAAAAcANQcANgEABGJlZXIBAAFJAQAFdm9ka2EBAAR3aW5lAQAEY29zdAEAAUQBAAl0b3RhbENvc3QBAAdnZXRiZWVyAQADKClJAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAB3NldGJlZXIBAAQoSSlWAQAIZ2V0dm9ka2EBAAhzZXR2b2RrYQEAB2dldHdpbmUBAAdzZXR3aW5lAQAHZ2V0Y29zdAEAAygpRAEAB3NldGNvc3QBAAQoRClWAQAMZ2V0dG90YWxDb3N0AQAMc2V0dG90YWxDb3N0AQAGPGluaXQ+AQADKClWAQAGaW52b2tlAQAKRXhjZXB0aW9ucwcANwEAClNvdXJjZUZpbGUBABFGYWtlSmF2YUNvZGUuamF2YQwAEQASDAATABIMABQAEgwAFQAWDAAXABYMACgAKQEAEUZha2UvRmFrZUphdmFDb2RlAQAQamF2YS9sYW5nL09iamVjdAEAE2phdmEvbGFuZy9FeGNlcHRpb24AIQAPABAAAAAFAAQAEQASAAAABAATABIAAAAEABQAEgAAAAQAFQAWAAAABAAXABYAAAAMAAEAGAAZAAEAGgAAAB0AAQABAAAABSq0AAGsAAAAAQAbAAAABgABAAAADAABABwAHQABABoAAAAiAAIAAgAAAAYqG7UAAbEAAAABABsAAAAKAAIAAAAPAAUAEAABAB4AGQABABoAAAAdAAEAAQAAAAUqtAACrAAAAAEAGwAAAAYAAQAAABIAAQAfAB0AAQAaAAAAIgACAAIAAAAGKhu1AAKxAAAAAQAbAAAACgACAAAAFQAFABYAAQAgABkAAQAaAAAAHQABAAEAAAAFKrQAA6wAAAABABsAAAAGAAEAAAAYAAEAIQAdAAEAGgAAACIAAgACAAAABiobtQADsQAAAAEAGwAAAAoAAgAAABsABQAcAAEAIgAjAAEAGgAAAB0AAgABAAAABSq0AASvAAAAAQAbAAAABgABAAAAHgABACQAJQABABoAAAAiAAMAAwAAAAYqJ7UABLEAAAABABsAAAAKAAIAAAAhAAUAIgABACYAIwABABoAAAAdAAIAAQAAAAUqtAAFrwAAAAEAGwAAAAYAAQAAACQAAQAnACUAAQAaAAAAIgADAAMAAAAGKie1AAWxAAAAAQAbAAAACgACAAAAJwAFACgAAQAoACkAAQAaAAAATgADAAEAAAAeKrcABioDtQABKgO1AAIqA7UAAyoOtQAEKg61AAWxAAAAAQAbAAAAHgAHAAAAKgAEAAYACQAHAA4ACAATAAkAGAAKAB0AKwABACoAKQACABoAAABTAAkAAQAAADMqFAAHtQAFKlm0AAUqtAABhxQACWsqtAAChxQAC2tjKrQAA4cUAA1rYyq0AARjY7UABbEAAAABABsAAAAOAAMAAAA1AAcANwAyADoAKwAAAAQAAQAsAAEALQAAAAIALg==</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <xsl:if test="$Parse-XML/Booking/Table/Beer">
+                    <beer>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/Beer"/>
+                    </beer>
+                </xsl:if>
+                <xsl:if test="$Parse-XML/Booking/Table/Vodka">
+                    <vodka>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/Vodka"/>
+                    </vodka>
+                </xsl:if>
+                <xsl:if test="$Parse-XML/Booking/Table/Wine">
+                    <wine>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/Wine"/>
+                    </wine>
+                </xsl:if>
+                <xsl:if test="$Parse-XML/Booking/Table/Cost">
+                    <cost>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/Cost"/>
+                    </cost>
+                </xsl:if>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render-XML-1">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>792</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>true</validateInput>
+            <term ref="pfx4:Booking"/>
+        </config>
+        <pd:inputBindings>
+            <Booking>
+                <Table>
+                    <Guest>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Guest"/>
+                    </Guest>
+                    <TableStatus>
+                        <xsl:value-of select="$JMS-Table-Schedule-Queue-Requestor/ns:ActivityOutput/Body"/>
+                    </TableStatus>
+                    <Beer>
+                        <xsl:value-of select="if ($Parse-XML-1/Booking/Table/Beer) then $Parse-XML-1/Booking/Table/Beer else 0"/>
+                    </Beer>
+                    <Vodka>
+                        <xsl:value-of select="if ($Parse-XML-1/Booking/Table/Vodka) then $Parse-XML-1/Booking/Table/Vodka else 0"/>
+                    </Vodka>
+                    <Wine>
+                        <xsl:value-of select="if($Parse-XML-1/Booking/Table/Wine) then $Parse-XML-1/Booking/Table/Wine else 0"/>
+                    </Wine>
+                    <Date>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/Date"/>
+                    </Date>
+                    <HostName>
+                        <xsl:value-of select="if ($JMS-Host-Schedule-Queue-Requestor/ns:ActivityOutput/Body=&quot;Failed&quot;) then &quot;Failed&quot;  else substring-before($JMS-Host-Schedule-Queue-Requestor/ns:ActivityOutput/Body, &quot;?&quot;)"/>
+                    </HostName>
+                    <Cost>
+                        <xsl:value-of select="if($Parse-XML-1/Booking/Table/WantHost=0 or $JMS-Host-Schedule-Queue-Requestor/ns:ActivityOutput/Body=&quot;Failed&quot;) then 0.0 else substring-after($JMS-Host-Schedule-Queue-Requestor/ns:ActivityOutput/Body, &quot;?&quot;)"/>
+                    </Cost>
+                    <WantHost>
+                        <xsl:value-of select="$Parse-XML-1/Booking/Table/WantHost"/>
+                    </WantHost>
+                    <PaymentStatus>
+                        <xsl:value-of select="0"/>
+                    </PaymentStatus>
+                </Table>
+            </Booking>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>942</pd:x>
+        <pd:y>164</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx4:Booking"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Render-XML-1/xmlString"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Send HTTP Response">
+        <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
+        <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
+        <pd:x>1115</pd:x>
+        <pd:y>106</pd:y>
+        <config>
+            <closeConnection>false</closeConnection>
+            <eventSource>HTTP Receiver</eventSource>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Set-Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Location" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings>
+            <ResponseActivityInput>
+                <asciiContent>
+                    <xsl:value-of select="if ($Parse-XML/Booking/Table/TableStatus= &quot;Failed&quot;) then &quot;Sorry :( Failed to book table. Please try again!&quot; else &quot;Sorry :( Failed to book host. Please try again!&quot;"/>
+                </asciiContent>
+            </ResponseActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render-XML-2">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>860</pd:x>
+        <pd:y>472</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term ref="pfx4:Booking"/>
+        </config>
+        <pd:inputBindings>
+            <Booking>
+                <Table>
+                    <Guest>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/Guest"/>
+                    </Guest>
+                    <TableStatus>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/TableStatus"/>
+                    </TableStatus>
+                    <xsl:if test="$Parse-XML/Booking/Table/Beer">
+                        <Beer>
+                            <xsl:value-of select="$Parse-XML/Booking/Table/Beer"/>
+                        </Beer>
+                    </xsl:if>
+                    <xsl:if test="$Parse-XML/Booking/Table/Vodka">
+                        <Vodka>
+                            <xsl:value-of select="$Parse-XML/Booking/Table/Vodka"/>
+                        </Vodka>
+                    </xsl:if>
+                    <xsl:if test="$Parse-XML/Booking/Table/Wine">
+                        <Wine>
+                            <xsl:value-of select="$Parse-XML/Booking/Table/Wine"/>
+                        </Wine>
+                    </xsl:if>
+                    <Date>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/Date"/>
+                    </Date>
+                    <xsl:if test="$Parse-XML/Booking/Table/HostName">
+                        <HostName>
+                            <xsl:value-of select="$Parse-XML/Booking/Table/HostName"/>
+                        </HostName>
+                    </xsl:if>
+                    <xsl:if test="$Java-Code/javaCodeActivityOutput/totalCost">
+                        <Cost>
+                            <xsl:value-of select="$Java-Code/javaCodeActivityOutput/totalCost"/>
+                        </Cost>
+                    </xsl:if>
+                    <WantHost>
+                        <xsl:value-of select="$Parse-XML/Booking/Table/WantHost"/>
+                    </WantHost>
+                    <PaymentStatus>
+                        <xsl:value-of select="0"/>
+                    </PaymentStatus>
+                </Table>
+            </Booking>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Send-HTTP-Response-1">
+        <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
+        <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
+        <pd:x>1222</pd:x>
+        <pd:y>407</pd:y>
+        <config>
+            <closeConnection>false</closeConnection>
+            <eventSource>HTTP Receiver</eventSource>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Set-Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Location" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings>
+            <ResponseActivityInput>
+                <asciiContent>
+                    <xsl:value-of select="concat(&quot;&lt;html> &lt;form method=post action=http://localhost:8084/EI/paymentPortal.jsp> Booking Details &lt;br> &lt;br> Guest Name: &quot;, $Parse-XML/Booking/Table/Guest, &quot;&lt;br> Table Number: &quot;, $Parse-XML/Booking/Table/TableStatus, &quot;&lt;br>Host Name: &quot;, $Parse-XML/Booking/Table/HostName, &#xA; &quot;&lt;br> Total Cost: &quot;, string($Java-Code/javaCodeActivityOutput/totalCost), &quot;&lt;br> &lt;input type=hidden name=guest value=&quot;, $Parse-XML-1/Booking/Table/Guest, &quot;> &lt;input type=hidden name=cost value=&quot;,$Java-Code/javaCodeActivityOutput/totalCost, &quot;>&lt;br>&lt;input type=submit value=Confirm and Pay>&lt;/form>&lt;/html>&quot; )"/>
+                </asciiContent>
+            </ResponseActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create File">
+        <pd:type>com.tibco.plugin.file.FileCreateActivity</pd:type>
+        <pd:resourceType>ae.activities.FileCreateActivity</pd:resourceType>
+        <pd:x>951</pd:x>
+        <pd:y>540</pd:y>
+        <config>
+            <overwrite>true</overwrite>
+            <createDirectory>false</createDirectory>
+        </config>
+        <pd:inputBindings>
+            <ns3:CreateActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="concat(&quot;D:\EI Guest Records\&quot;,$Parse-XML-1/Booking/Table/Guest,&quot;.txt&quot;)"/>
+                </fileName>
+            </ns3:CreateActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Write-File-3">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>1038</pd:x>
+        <pd:y>522</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+            <append>true</append>
+        </config>
+        <pd:inputBindings>
+            <ns3:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$Create-File/ns3:CreateActivityOutputClass/fileInfo/fullName"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="$Render-XML-2/xmlString"/>
+                </textContent>
+            </ns3:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse-XML-1">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>223</pd:x>
+        <pd:y>153</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx:Booking"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Render-XML-3/xmlString"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render-XML-3">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>138</pd:x>
+        <pd:y>238</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term ref="pfx:Booking"/>
+        </config>
+        <pd:inputBindings>
+            <Booking>
+                <Table>
+                    <Guest>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Guest"/>
+                    </Guest>
+                    <Beer>
+                        <xsl:value-of select="if ($HTTP-Receiver/ProcessStarterOutput/parameters/Beer) then $HTTP-Receiver/ProcessStarterOutput/parameters/Beer else 0"/>
+                    </Beer>
+                    <Vodka>
+                        <xsl:value-of select="if ($HTTP-Receiver/ProcessStarterOutput/parameters/Vodka) then $HTTP-Receiver/ProcessStarterOutput/parameters/Vodka else 0"/>
+                    </Vodka>
+                    <Wine>
+                        <xsl:value-of select="if ($HTTP-Receiver/ProcessStarterOutput/parameters/Wine) then $HTTP-Receiver/ProcessStarterOutput/parameters/Wine else 0"/>
+                    </Wine>
+                    <Date>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Date"/>
+                    </Date>
+                    <HostName>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/HostName"/>
+                    </HostName>
+                    <Gender>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Gender"/>
+                    </Gender>
+                    <Race>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Race"/>
+                    </Race>
+                    <Budget>
+                        <xsl:value-of select="if ($HTTP-Receiver/ProcessStarterOutput/parameters/Budget) then $HTTP-Receiver/ProcessStarterOutput/parameters/Budget else 0"/>
+                    </Budget>
+                    <WantHost>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/WantHost"/>
+                    </WantHost>
+                </Table>
+            </Booking>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Render-XML-Booking</pd:from>
+        <pd:to>JMS Table Schedule Queue Requestor</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render XML</pd:from>
+        <pd:to>JMS Host Schedule Queue Requestor</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JMS Table Schedule Queue Requestor</pd:from>
+        <pd:to>Render-XML-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JMS Host Schedule Queue Requestor</pd:from>
+        <pd:to>Render-XML-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render-XML-1</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>Java Code</pd:to>
+        <pd:xpathDescription>Time to go Pay</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:xpathDescription>Booking unsuccessful</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>contains($Render-XML-1/xmlString, "Failed")</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Send HTTP Response</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java Code</pd:from>
+        <pd:to>Render-XML-2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render-XML-2</pd:from>
+        <pd:to>Create File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Send-HTTP-Response-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create File</pd:from>
+        <pd:to>Write-File-3</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse-XML-1</pd:from>
+        <pd:to>Render-XML-Booking</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse-XML-1</pd:from>
+        <pd:to>Render XML</pd:to>
+        <pd:xpathDescription>Want Host</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Parse-XML-1/Booking/Table/WantHost=1</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write-File-3</pd:from>
+        <pd:to>Send-HTTP-Response-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render-XML-3</pd:from>
+        <pd:to>Parse-XML-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>HTTP Receiver</pd:from>
+        <pd:to>Render-XML-3</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

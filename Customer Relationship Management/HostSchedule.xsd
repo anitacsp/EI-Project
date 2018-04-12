@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Studio 2017 - Developer Bundle Edition (Education) 15.1.17.7979 (https://www.liquid-technologies.com) -->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="HostSchedule">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="Host">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="1" name="Guest" type="xs:string" />
+                            <xs:element minOccurs="1" name="Date" type="xs:string" />
+                            <xs:element minOccurs="0" name="HostName" type="xs:string" />
+                            <xs:element minOccurs="0" name="Gender" type="xs:string" />
+                            <xs:element minOccurs="0" name="Race" type="xs:string" />
+                            <xs:element minOccurs="0" name="Budget" type="xs:double" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
